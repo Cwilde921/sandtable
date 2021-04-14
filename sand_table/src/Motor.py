@@ -39,9 +39,9 @@ class Motor:
 
     def walk(self, steps:int, delay):
         if steps > 0:
-            dir = Dir.CW
+            dir = 1
         else:
-            dir = Dir.CCW
+            dir = -1
             steps = abs(steps)
         for _ in range(steps):
             self.step(dir)
@@ -49,7 +49,7 @@ class Motor:
         self.release_break()
 
 if __name__ == "__main__":
-    m1 = Motor(config["th_motor_pins_bcm"])
-    m1.walk(2048, 0.003)
-    m1.walk(-2048, 0.003)
+    m1 = Motor(config["r_motor_pins_bcm"], True)
+    m1.walk(12048, 0.003)
+    m1.walk(-12048, 0.003)
     m1.release_break()
