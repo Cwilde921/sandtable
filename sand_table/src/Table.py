@@ -15,8 +15,8 @@ class Table:
         self.pos = {'th': 0, 'r': 0}
         self.goal = {'th': 0, 'r': 0}
         th_full_steps = math.pi/1024
-        self.step_motion_th = {'th': th_full_steps, 'r': (th_full_steps/10)}
-        self.step_motion_r = {'th': 0, 'r': (1/2048)}
+        self.step_motion_th = config.motion['th'] #{'th': th_full_steps, 'r': (th_full_steps/10)}
+        self.step_motion_r = config.motion['r'] #{'th': 0, 'r': (1/2048)}
         #self.reader = Reader()
 
     def __del__(self):
