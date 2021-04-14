@@ -1,0 +1,31 @@
+/* .body button {
+    border-style: none;
+    background-color: white;
+    box-shadow: 4px 3px 8px 1px black;
+    margin: 20px;
+    padding: 10px;
+} 
+.body button:hover {
+    background-color: rgb(200, 200, 200);
+} */
+
+.body input[type="file"] {
+    display: none;
+}
+
+.body hr {
+    margin-top: 30px;
+    width: 90%;
+}
+
+.inpt {
+    border-style: none;
+    background-color: white;
+    box-shadow: 4px 3px 8px 1px black;
+    margin: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+.inpt:hover {
+    background-color: rgb(200, 200, 200);
+}

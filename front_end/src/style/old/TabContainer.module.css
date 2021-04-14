@@ -1,0 +1,10 @@
+.tabcontainer {
+    /* justify-content: center; */
+}
+
+.tabs {
+    display: flex;
+    width: 90%;
+    position: relative;
+    left: 5%;
+}
