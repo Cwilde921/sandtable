@@ -21,10 +21,14 @@ def calc_motion():
     rad_p_step = math.pi / 1024
     res: {}
     res['th'] = {}
+    res['r'] = {}
+
     #
     res['th']['th'] = config['gear_ratio_th'] * rad_p_step
     res['th']['r'] = res['th']['th'] * config['gear_ratio_r']
     res['r']['r'] = config['gear_ratio_r'] * rad_p_step
     res['r']['th'] = 0
+    
+    config.motion = res
     
  
