@@ -18,7 +18,7 @@ config = {
 }
     
 def calc_motion():
-    rad_p_step = math.pi / 1024
+    rad_p_step = math.pi / (1024 if config['use_steps'] == StepSequence.FOUR else 2048)
     res: {}
     res['th'] = {}
     res['r'] = {}
