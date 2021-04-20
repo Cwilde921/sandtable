@@ -14,12 +14,12 @@ config = {
     
     "gear_ratio_th": 20/289,
     "gear_ratio_r": 20/100,
-    "motion": 
+    "motion": {},
 }
     
 def calc_motion():
     rad_p_step = math.pi / (1024 if config['use_steps'] == StepSequence.FOUR else 2048)
-    res: {}
+    res = {}
     res['th'] = {}
     res['r'] = {}
 
@@ -28,7 +28,6 @@ def calc_motion():
     res['th']['r'] = res['th']['th'] * config['gear_ratio_r']
     res['r']['r'] = config['gear_ratio_r'] * rad_p_step
     res['r']['th'] = 0
-    
-    config.motion = res
-    
- 
+    config['motion'] = res 
+
+calc_motion() 
