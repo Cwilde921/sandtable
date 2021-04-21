@@ -13,7 +13,7 @@ config = {
     "r_motor_pins_bcm": (17,27,22,10),
     
     "gear_ratio_th": 20/289,
-    "gear_ratio_r": 20/100,
+    "gear_ratio_r": 20/90,
     "motion": {},
 }
     
