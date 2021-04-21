@@ -23,9 +23,8 @@ def calc_motion():
     res['th'] = {}
     res['r'] = {}
 
-    #
     res['th']['th'] = config['gear_ratio_th'] * 2 * math.pi / num_steps
-    res['th']['r'] = res['th']['th'] * config['gear_ratio_r']
+    res['th']['r'] = res['th']['th'] * config['gear_ratio_r'] # config['gear_ratio_th'] * config['gear_ratio_r']
     res['r']['r'] = config['gear_ratio_r'] / num_steps
     res['r']['th'] = 0
     config['motion'] = res 
