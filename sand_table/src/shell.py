@@ -5,7 +5,7 @@ def loop():
     table = Table()
     reader = Reader()
     while True:
-        inpt = input("->")
+        inpt = input( "{} {} -> ".format(table.get_pos()['th'], table.get_pos()['r']) )
         if "exit" in inpt:
             break
         elif "set" in inpt:
