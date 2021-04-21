@@ -27,7 +27,7 @@ class Table:
     #return the distance of new_pos to self.goal
     def heuristic(self, new_pos, version=0):
         if version == 0:
-            return (self.goal['r'] ** 2) + (new_pos['r'] ** 2) - ( 2 * self.goal['r'] * new_pos['r'] * math.cos( new_pos['th'] - self.goal['th'] ) )
+            return math.pow(self.goal['r'], 2) + math.pow(new_pos['r'], 2) - ( 2 * self.goal['r'] * new_pos['r'] * math.cos( new_pos['th'] - self.goal['th'] ) )
         if version == 1:
             if(new_pos['r'] >= 1):
                 return math.inf
