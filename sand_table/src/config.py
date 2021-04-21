@@ -18,13 +18,13 @@ config = {
 }
     
 def calc_motion():
-    num_steps = (1024 if config['use_steps'] == StepSequence.FOUR else 2048)
+    num_steps = (2048 if config['use_steps'] == StepSequence.FOUR else 4096)
     res = {}
     res['th'] = {}
     res['r'] = {}
 
     #
-    res['th']['th'] = config['gear_ratio_th'] * math.pi / num_steps
+    res['th']['th'] = config['gear_ratio_th'] * 2 * math.pi / num_steps
     res['th']['r'] = res['th']['th'] * config['gear_ratio_r']
     res['r']['r'] = config['gear_ratio_r'] / num_steps
     res['r']['th'] = 0
