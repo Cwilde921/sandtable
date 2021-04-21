@@ -79,7 +79,7 @@ class Table:
         return self.pos
     
     def set_pos(self, pos):
-        self.pos = pos)
+        self.pos = pos
 
     #def execute(self, filename):
     #    self.reader.read_exec_file(filename, self.goto)
