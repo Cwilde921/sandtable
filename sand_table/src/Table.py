@@ -25,13 +25,18 @@ class Table:
         GPIO.cleanup()
 
     #return the distance of new_pos to self.goal
-    def heuristic(self, new_pos, version=0):
+    def heuristic(self, new_pos, version=1):
+        if(new_pos['r'] >= 1 or new_pos['r'] < 0):
+            print('either 0 or 1')
+            return math.inf
+                
         if version == 0:
             return math.pow(self.goal['r'], 2) + math.pow(new_pos['r'], 2) - ( 2 * self.goal['r'] * new_pos['r'] * math.cos( new_pos['th'] - self.goal['th'] ) )
         if version == 1:
-            if(new_pos['r'] >= 1):
-                return math.inf
-                
+            x_new = 0
+            y_new = 0
+            x_goal = 0
+            y_goal = 0 
             d_r = self.goal['r'] - new_pos['r']
             d_th = self.goal['th'] - new_pos['th']
             return math.sqrt( (d_r * d_r) + (d_th * d_th) )
