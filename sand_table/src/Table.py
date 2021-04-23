@@ -38,13 +38,15 @@ class Table:
             return math.sqrt( (d_r * d_r) + (d_th * d_th) )
         if version == 2:
             cart_new_pos = {
-                'x': new_pos['r'] * math.cos(new_pos['th'],
-                'y': new_pos['r'] * math.sin(new_pos['th'],
+                'x': new_pos['r'] * math.cos(new_pos['th']),
+                'y': new_pos['r'] * math.sin(new_pos['th']),
             }
             cart_goal = {
                 'x': self.goal['r'] * math.cos(self.goal['th']),
                 'y': self.goal['r'] * math.sin(self.goal['th']),
             }
+            x = cart_goal['x'] - cart_new_pos['x']
+            y = cart_goal['y'] - cart_new_pos['y']
             return math.sqrt( math.pow(x, 2) + math.pow(y, 2) )
                                          
 
