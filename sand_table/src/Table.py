@@ -25,7 +25,7 @@ class Table:
         GPIO.cleanup()
 
     #return the distance of new_pos to self.goal
-    def heuristic(self, new_pos, version=1):
+    def heuristic(self, new_pos, version=2):
         if(new_pos['r'] >= 1 or new_pos['r'] < 0):
             print('either 0 or 1')
             return math.inf
@@ -33,15 +33,20 @@ class Table:
         if version == 0:
             return math.pow(self.goal['r'], 2) + math.pow(new_pos['r'], 2) - ( 2 * self.goal['r'] * new_pos['r'] * math.cos( new_pos['th'] - self.goal['th'] ) )
         if version == 1:
-            x_new = 0
-            y_new = 0
-            x_goal = 0
-            y_goal = 0 
             d_r = self.goal['r'] - new_pos['r']
             d_th = self.goal['th'] - new_pos['th']
             return math.sqrt( (d_r * d_r) + (d_th * d_th) )
         if version == 2:
-            pass
+            cart_new_pos = {
+                'x': new_pos['r'] * math.cos(new_pos['th'],
+                'y': new_pos['r'] * math.sin(new_pos['th'],
+            }
+            cart_goal = {
+                'x': self.goal['r'] * math.cos(self.goal['th']),
+                'y': self.goal['r'] * math.sin(self.goal['th']),
+            }
+            return math.sqrt( math.pow(x, 2) + math.pow(y, 2) )
+                                         
 
     # def heuristic(self, new_pos): #P1 = self.pos, P2 = new_pos
     #     return (self.pos['r'] ** 2) + (new_pos['r'] ** 2) - ( 2 * self.pos['r'] * new_pos['r'] * math.cos( new_pos['th'] - self.pos['th'] ) )
