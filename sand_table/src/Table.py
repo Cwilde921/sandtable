@@ -25,7 +25,7 @@ class Table:
         GPIO.cleanup()
 
     #return the distance of new_pos to self.goal
-    def heuristic(self, new_pos, version=2):
+    def heuristic(self, new_pos, version=1):
         if(new_pos['r'] >= 1 or new_pos['r'] < 0):
             print('either 0 or 1')
             return math.inf
