@@ -5,9 +5,10 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 class Motor:
-    def __init__(self, pins:Tuple[int], gpio_setup_teardown=False):
+    def __init__(self, pins:Tuple[int], gpio_setup_teardown=False, flip_dir=False):
         self.__pins = pins
         self.gpio_setup_teardown = gpio_setup_teardown
+        self.flip_dir = flip_dir
         if gpio_setup_teardown:
             GPIO.setmode(GPIO.BCM)
         for pin in pins:
@@ -28,6 +29,8 @@ class Motor:
         self._write_pins(self.__step_seq.current())
 
     def step(self, stp:int):
+        if self.flip_dir:
+            stp = -stp
         if   stp ==  0: return self.release_break()
         if   stp ==  1: return self._write_pins(self.__step_seq.next(Dir.CW))
         elif stp == -1: return self._write_pins(self.__step_seq.next(Dir.CCW))
@@ -38,6 +41,8 @@ class Motor:
             GPIO.output(self.__pins[i], GPIO.HIGH if outpt[i] else GPIO.LOW)
 
     def walk(self, steps:int, delay):
+        if self.flip_dir:
+            steps = -steps
         if steps > 0:
             dir = 1
         else:
