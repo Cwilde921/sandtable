@@ -10,7 +10,7 @@ def loop():
             break
         elif "set" in inpt:
             if "home" in inpt:
-                pass
+                table.set_pos(0, 0)
         else:
             inpt = inpt.split('\n')
             for l in inpt:
