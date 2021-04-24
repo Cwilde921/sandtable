@@ -9,7 +9,8 @@ def loop():
         if "exit" in inpt:
             break
         elif "set" in inpt:
-            pass
+            if "home" in inpt:
+                pass
         else:
             inpt = inpt.split('\n')
             for l in inpt:
