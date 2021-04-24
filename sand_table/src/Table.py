@@ -10,7 +10,7 @@ class Table:
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         self.__m_th = Motor(config["th_motor_pins_bcm"])
-        self.__m_r = Motor(config["r_motor_pins_bcm"], flip_dir=True)
+        self.__m_r = Motor(config["r_motor_pins_bcm"], flip_dir=False)
         self.sleep_time = config['delay_ms'] / 1000
         self.pos = {'th': 0, 'r': 0}
         self.goal = {'th': 0, 'r': 0}
