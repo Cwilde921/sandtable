@@ -1,6 +1,13 @@
 import sys
+from shell import loop
+from Reader import Reader
+from Table import Table
+from config import config
 
 args = sys.args
+
+if '--shell' in args or '-sh' in args:
+    loop()
 
 file = -1
 if '--file' in args:
@@ -8,6 +15,8 @@ if '--file' in args:
 elif '-f' in args:
     file = args.index("-f")
 
-file = None if file < 0 else args[file+1]
-
-
+if file >= 0:
+    file = config['pattern_dir'] + args[file+1]
+    reader = Reader()
+    table = Table()
+    reader.read_exec_file(file, table.goto)
