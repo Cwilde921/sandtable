@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 import sys
 from shell import loop
 from Reader import Reader
