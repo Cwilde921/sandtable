@@ -8,6 +8,7 @@ args = sys.args
 
 if '--shell' in args or '-sh' in args:
     loop()
+    sys.exit()
 
 file = -1
 if '--file' in args:
@@ -20,3 +21,4 @@ if file >= 0:
     reader = Reader()
     table = Table()
     reader.read_exec_file(file, table.goto)
+    sys.exit()
