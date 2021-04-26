@@ -6,7 +6,7 @@ from Reader import Reader
 from Table import Table
 from config import config
 
-args = sys.args
+args = sys.argv
 
 if '--shell' in args or '-sh' in args:
     loop()
