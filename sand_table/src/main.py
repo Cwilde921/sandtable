@@ -11,40 +11,43 @@ reader = Reader()
 table = Table()
 
 if '--shell' in args or '-sh' in args:
-    while True:
-        inpt = input( "{%.2f} {%.2f} -> ".format(table.get_pos()['th'], table.get_pos()['r']) )
-        if "help" in inpt:
-            print("\n\n" +\
-                "\t======== Sand Table Shell Help ========\n" +\
-                "exit:                 Exit program.\n" +\
-                "set:\n" +\
-                "    home:             Set current position to 0, 0.\n" +\
-                "file:\n" +\
-                "    <filename>:       Fun file from patterns directory.\n" +\
-                "<theta> <rho>:        Goto position specified.\n" +\
-                "\t=============== End Help ==============\n\n" 
-            )
+    try:
+        while True:
+            inpt = input( "{%.2f} {%.2f} -> ".format(table.get_pos()['th'], table.get_pos()['r']) )
+            if "help" in inpt:
+                print("\n\n" +\
+                    "\t======== Sand Table Shell Help ========\n" +\
+                    "exit:                 Exit program.\n" +\
+                    "set:\n" +\
+                    "    home:             Set current position to 0, 0.\n" +\
+                    "file:\n" +\
+                    "    <filename>:       Fun file from patterns directory.\n" +\
+                    "<theta> <rho>:        Goto position specified.\n" +\
+                    "\t=============== End Help ==============\n\n" 
+                )
 
-        if "exit" in inpt:
-            break
-        elif "set" in inpt:
-            if "home" in inpt:
-                table.set_pos({'th': 0, 'r':0})
-        elif "file" in inpt:
-            args = inpt.split(' ')
-            fname = args[args.index("file")+1]
-            path = config['pattern_dir']
-            if(path[-1] != '/'): path = path + '/'
-            fname = path + fname
-        
-        else:
-            inpt = inpt.split('\n')
-            for l in inpt:
-                try:
-                    cmd = reader.read_line_thr(l)
-                    table.goto(cmd)
-                except:
-                    print("\nAn error ocurred. Invalid command")
+            if "exit" in inpt:
+                break
+            elif "set" in inpt:
+                if "home" in inpt:
+                    table.set_pos({'th': 0, 'r':0})
+            elif "file" in inpt:
+                args = inpt.split(' ')
+                fname = args[args.index("file")+1]
+                path = config['pattern_dir']
+                if(path[-1] != '/'): path = path + '/'
+                fname = path + fname
+            
+            else:
+                inpt = inpt.split('\n')
+                for l in inpt:
+                    try:
+                        cmd = reader.read_line_thr(l)
+                        table.goto(cmd)
+                    except:
+                        print("\nAn error ocurred. Invalid command")
+    except KeyboardInterrupt:
+        print("\nGoodbye")
     sys.exit()
 
 file = -1
@@ -66,8 +69,17 @@ if '--help' in args or '-h' in args:
         "--help:   -h:               Show this help\n" +\
         "--shell:  -sh:              Start sand table shell\n" +\
         "--file:   -f:   <filename>  Run specified file\n" +\
+        "--run:    -r:               Run random files continuously\n" +\
         "=============== End Help ==============\n" 
     )
+    sys.exit()
+
+if '--run' in args or '-r' in args:
+    try:
+        reader.run(table.goto)
+    except KeyboardInterrupt:
+        print("\nGoodbye")
+    sys.exit()
 
 # def loop(table, reader):
 #     while True:
