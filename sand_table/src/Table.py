@@ -5,6 +5,7 @@ from decimal import *
 from time import sleep
 import RPi.GPIO as GPIO
 import math
+import SandTableMath
 
 class Table:
     def __init__(self):
@@ -12,12 +13,14 @@ class Table:
         self.__m_th = Motor(config["th_motor_pins_bcm"])
         self.__m_r = Motor(config["r_motor_pins_bcm"], flip_dir=False)
         self.sleep_time = config['delay_ms'] / 1000
+        self.last_pos = {'th': 0, 'r': 0}
         self.pos = {'th': 0, 'r': 0}
         self.goal = {'th': 0, 'r': 0}
         # th_full_steps = math.pi/1024
         self.step_motion_th = config['motion']['th'] #{'th': th_full_steps, 'r': (th_full_steps/10)}
         self.step_motion_r = config['motion']['r'] #{'th': 0, 'r': (1/2048)}
         #self.reader = Reader()
+        self.debug = True
 
     def __del__(self):
         del self.__m_th
@@ -27,7 +30,8 @@ class Table:
     #return the distance of new_pos to self.goal
     def heuristic(self, new_pos, version=1):
         if(new_pos['r'] >= 1 or new_pos['r'] < 0):
-            print('either 0 or 1')
+            if self.debug:
+                print('either 0 or 1')
             return math.inf
                 
         if version == 0:
@@ -48,6 +52,8 @@ class Table:
             x = cart_goal['x'] - cart_new_pos['x']
             y = cart_goal['y'] - cart_new_pos['y']
             return math.sqrt( math.pow(x, 2) + math.pow(y, 2) )
+        if version == 3:
+            return SandTableMath.heuristic(new_pos, self.last_pos, self.goal)
                                          
 
     # def heuristic(self, new_pos): #P1 = self.pos, P2 = new_pos
@@ -77,9 +83,11 @@ class Table:
             sleep(self.sleep_time)
 
     def goto(self, cmd):
-        if len(cmd) < 2:
+        if len(cmd) < 2 or cmd['r'] < 0:
             return
-        print(cmd)
+        if self.debug:
+            print(cmd)
+        self.last_pos = self.pos
         self.set_goal(cmd)
         bm = {'complete': False}
         while not bm['complete']:
