@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#!/usr/bin/env python3
 
 import sys
 from Reader import Reader
@@ -13,7 +13,7 @@ table = Table()
 if '--shell' in args or '-sh' in args:
     try:
         while True:
-            inpt = input( "{%.2f} {%.2f} -> ".format(table.get_pos()['th'], table.get_pos()['r']) )
+            inpt = input( "{:.2f} {:.2f} -> ".format(table.get_pos()['th'], table.get_pos()['r']) )
             if "help" in inpt:
                 print("\n\n" +\
                     "\t======== Sand Table Shell Help ========\n" +\
@@ -59,7 +59,7 @@ elif '-f' in args:
 if file >= 0:
     path = config['pattern_dir']
     if(path[-1] != '/'): path = path + '/'
-    fname = path + fname
+    fname = path + args[file+1]
     reader.read_exec_file(fname, table.goto)
     sys.exit()
 
