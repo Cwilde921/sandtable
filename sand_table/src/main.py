@@ -20,6 +20,8 @@ if '--shell' in args or '-sh' in args:
                     "exit:                 Exit program.\n" +\
                     "set:\n" +\
                     "    home:             Set current position to 0, 0.\n" +\
+                    "    safe:             Set to safe mode.\n" +\
+                    "    dangerous:        Set to unprotected mode.\n" +\
                     "file:\n" +\
                     "    <filename>:       Fun file from patterns directory.\n" +\
                     "<theta> <rho>:        Goto position specified.\n" +\
@@ -31,6 +33,10 @@ if '--shell' in args or '-sh' in args:
             elif "set" in inpt:
                 if "home" in inpt:
                     table.set_pos({'th': 0, 'r':0})
+                if "safe" in inpt:
+                    table.set_safe(True)
+                if "dangerous" in inpt:
+                    table.set_safe(False)
             elif "file" in inpt:
                 args = inpt.split(' ')
                 fname = args[args.index("file")+1]

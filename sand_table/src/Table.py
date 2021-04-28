@@ -21,14 +21,25 @@ class Table:
         self.step_motion_r = config['motion']['r'] #{'th': 0, 'r': (1/2048)}
         #self.reader = Reader()
         self.debug = True
+        self.heuristic_version = 1
+        self.safe_mode = True
 
     def __del__(self):
         del self.__m_th
         del self.__m_r
         GPIO.cleanup()
 
+    def set_safe(self, val):
+        self.safe_mode = val
+
     #return the distance of new_pos to self.goal
-    def heuristic(self, new_pos, version=1):
+    def heuristic(self, new_pos, version=None, safe_mode=None):
+        if safe_mode is None: safe_mode = self.safe_mode
+        if version is None: version = self.heuristic_version
+        if version == 3:
+            return SandTableMath.heuristic(new_pos, self.last_pos, self.goal, safe_mode=safe_mode)
+        if version == 4:
+            return SandTableMath.simple_heuristic(new_pos, self.goal, safe_mode=safe_mode)
         if(new_pos['r'] >= 1 or new_pos['r'] < 0):
             if self.debug:
                 print('either 0 or 1')
@@ -52,8 +63,6 @@ class Table:
             x = cart_goal['x'] - cart_new_pos['x']
             y = cart_goal['y'] - cart_new_pos['y']
             return math.sqrt( math.pow(x, 2) + math.pow(y, 2) )
-        if version == 3:
-            return SandTableMath.heuristic(new_pos, self.last_pos, self.goal)
                                          
 
     # def heuristic(self, new_pos): #P1 = self.pos, P2 = new_pos
@@ -100,6 +109,11 @@ class Table:
     
     def set_pos(self, pos):
         self.pos = pos
+
+    def heuristic_version(self, version=None):
+        if version is None:
+            return self.heuristic_version
+        self.heuristic_version = version
 
     #def execute(self, filename):
     #    self.reader.read_exec_file(filename, self.goto)

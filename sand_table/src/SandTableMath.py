@@ -1,14 +1,32 @@
 import math
 
-def heuristic(pos, orig, dest):
+def heuristic(pos, orig, dest, safe_mode=True):
     p = to_lst(pos)
     o = to_lst(orig)
     d = to_lst(dest)
 
     multiplier = 1
-    if( pos['r'] < 0 ): multiplier += 1
+    if safe_mode:
+        if ( pos['r'] < 0 ): multiplier += ( abs(pos['r']) * 3 )
+        if ( pos['r'] > 1 ): multiplier += ( (pos['r'] -1) * 3 )
 
     return ( dist(p, p) + line_dist(p, o, d) ) * multiplier
+
+def simple_heuristic(pos, dest, safe_mode=True):
+    p = to_lst(pos)
+    d = to_lst(dest)
+    # print(p)
+
+    multiplier = 1
+    if safe_mode:
+        if ( pos['r'] < 0 ): multiplier += ( abs(pos['r']) * 3 )
+        if ( pos['r'] > 1 ): multiplier += ( (pos['r'] -1) * 3 )
+
+
+    res = dist(p, p) * multiplier
+    # print("multiplier", multiplier)
+    # print("results", res)
+    return res
 
 def to_lst(obj):
     if type(obj) == list:
@@ -37,7 +55,10 @@ def to_cartesian(lst):
 def dist(p1, p2):
     d_x = p2[0] - p1[0]
     d_y = p2[1] - p1[1]
-    return math.sqrt( math.pow(d_x, 2) + math.pow(d_y, 2) )
+    print(p1)
+    res = math.sqrt( math.pow(d_x, 2) + math.pow(d_y, 2) )
+    print(res)
+    return res
     
 # Function to return the minimum distance
 # between a line segment AB and a point E
