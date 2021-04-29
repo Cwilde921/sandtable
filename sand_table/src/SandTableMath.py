@@ -8,6 +8,9 @@ def heuristic(pos, orig, dest, safe_mode=True):
     multiplier = 1
     if safe_mode:
         multiplier = calc_multiplier(p[1])
+        print("multiplier: ", multiplier)
+    print("dist results: ", dist(p, d))
+    print("line results: ", line_dist(p, o, d))
 
     return ( dist(p, d) + line_dist(p, o, d) ) * multiplier
 
@@ -107,6 +110,10 @@ def line_dist(E, A, B) :
         x2 = AE[0]
         y2 = AE[1]
         mod = math.sqrt(x1 * x1 + y1 * y1)
+        # if(mod == 0):
+        #     y = E[1] - A[1]
+        #     x = E[0] - A[0]
+        #     return math.sqrt(x * x + y * y)
         reqAns = abs(x1 * y2 - y1 * x2) / mod
     return reqAns
  
@@ -115,11 +122,13 @@ if __name__ == "__main__" :
  
     A = [0, 0]
     a = to_polar_dict(A)
-    B = [2, 0.7]
+    B = [4, 1]
     b = to_polar_dict(B)
-    E = [1, 0.3]
+    E = [0, 0]
     e = to_polar_dict(E)
  
-    print(line_dist(E, A, B))
-    print(dist(E, B))
-    print(heuristic(E, A, B))
+    # print(line_dist(E, A, B))
+    # print(dist(E, B))
+    # print(heuristic(E, A, B))
+    print(heuristic(e, a, b))
+    # print(heuristic(e, a, b, False))
