@@ -25,7 +25,7 @@ class Reader:
         f = random.choice(glob.glob(config['pattern_dir']+"*.thr"))
         return f
 
-    def run(self, handler):
+    def run(self, table, do_home=False):
         while True:
             f = self._dequeue()
             self.file_data = {}
@@ -35,7 +35,10 @@ class Reader:
             #        self.read_exec_file(config['pattern_dir']+'clear/center.thr', handler, clear_first=False)
             #    else:
             #        self.read_exec_file(config['pattern_dir']+'clear/perimeter.thr', handler, clear_first=False)
-            self.read_exec_file(f, handler, clear_first=True)
+            if do_home:
+                table.go_home()
+            self.read_exec_file(f, table.goto, clear_first=True)
+            
 
     def read_exec_file(self, filename, handler, clear_first=False):
         print(filename)

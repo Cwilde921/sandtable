@@ -29,6 +29,13 @@ class Table:
         del self.__m_r
         GPIO.cleanup()
 
+    def go_home(self):
+        print("going home...")
+        self.__m_r.walk( int( - self.__m_r.seps_in_rot() / config['gear_ratio_r'] ), self.sleep_time ) # move backwards past 0
+        self.__m_r.walk( int( 175 / config['gear_ratio_r'] ), self.sleep_time ) # move forwards to 0
+        self.pos['th'] = 0
+        self.pos['r'] = 0
+
     def set_safe(self, val):
         self.safe_mode = val
 

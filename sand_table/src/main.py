@@ -10,7 +10,9 @@ args = sys.argv
 reader = Reader()
 table = Table()
 
-if '--shell' in args or '-sh' in args:
+def shell_func():
+    global table
+    global reader
     try:
         while True:
             inpt = input( "{:.2f} {:.2f} -> ".format(table.get_pos()['th'], table.get_pos()['r']) )
@@ -18,6 +20,8 @@ if '--shell' in args or '-sh' in args:
                 print("\n\n" +\
                     "\t======== Sand Table Shell Help ========\n" +\
                     "exit:                 Exit program.\n" +\
+                    "go:\n" +\
+                    "    home:             Go to 0, 0.\n" +\
                     "set:\n" +\
                     "    home:             Set current position to 0, 0.\n" +\
                     "    safe:             Set to safe mode.\n" +\
@@ -30,6 +34,9 @@ if '--shell' in args or '-sh' in args:
 
             if "exit" in inpt:
                 break
+            elif "go" in inpt:
+                if "home" in inpt:
+                    table.go_home()
             elif "set" in inpt:
                 if "home" in inpt:
                     table.set_pos({'th': 0, 'r':0})
@@ -43,6 +50,11 @@ if '--shell' in args or '-sh' in args:
                 path = config['pattern_dir']
                 if(path[-1] != '/'): path = path + '/'
                 fname = path + fname
+                print(fname)
+                try:
+                    reader.read_exec_file(fname, table.goto)
+                except KeyboardInterrupt:
+                    print("stopping {} early".format(fname))
             
             else:
                 inpt = inpt.split('\n')
@@ -55,6 +67,14 @@ if '--shell' in args or '-sh' in args:
     except KeyboardInterrupt:
         print("\nGoodbye")
     sys.exit()
+
+
+
+if '--go_home' in args or '-gh' in args:
+    table.go_home()
+
+if '--shell' in args or '-sh' in args:
+    shell_func()
 
 file = -1
 if '--file' in args:
@@ -72,17 +92,18 @@ if file >= 0:
 if '--help' in args or '-h' in args:
     print("\n" +\
         "================ Help ================\n" +\
-        "--help:   -h:               Show this help\n" +\
-        "--shell:  -sh:              Start sand table shell\n" +\
-        "--file:   -f:   <filename>  Run specified file\n" +\
-        "--run:    -r:               Run random files continuously\n" +\
+        "--help         -h                Show this help\n" +\
+        "--shell        -sh               Start sand table shell\n" +\
+        "--file         -f   <filename>   Run specified file\n" +\
+        "--run          -r                Run random files continuously\n" +\
+        "--go_home      -gh               Run homing sequence\n" +\
         "=============== End Help ==============\n" 
     )
     sys.exit()
 
 if '--run' in args or '-r' in args:
     try:
-        reader.run(table.goto)
+        reader.run(table, do_home=True)
     except KeyboardInterrupt:
         print("\nGoodbye")
     sys.exit()

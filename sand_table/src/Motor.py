@@ -53,6 +53,9 @@ class Motor:
             sleep(delay)
         self.release_break()
 
+    def seps_in_rot(self):
+        return self.__step_seq.steps_in_rot()
+
 if __name__ == "__main__":
     m1 = Motor(config["r_motor_pins_bcm"], True)
     m1.walk(12048, 0.003)

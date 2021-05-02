@@ -8,9 +8,6 @@ def heuristic(pos, orig, dest, safe_mode=True):
     multiplier = 1
     if safe_mode:
         multiplier = calc_multiplier(p[1])
-        print("multiplier: ", multiplier)
-    print("dist results: ", dist(p, d))
-    print("line results: ", line_dist(p, o, d))
 
     return ( dist(p, d) + line_dist(p, o, d) ) * multiplier
 

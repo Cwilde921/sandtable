@@ -42,6 +42,8 @@ class StepSequence:
             if(self._step_ctr < 0):
                 self._step_ctr = len(self.steps) -stp
 
+    def steps_in_rot(self):
+        return 2048 if self.steps == self.FOUR else 4096
 
 if __name__ == "__main__":
 
