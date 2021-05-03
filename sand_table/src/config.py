@@ -1,5 +1,8 @@
-from StepSequence import StepSequence
 import math
+try:
+    from StepSequence import StepSequence
+except ModuleNotFoundError:
+    from .StepSequence import StepSequence
 
 config = {
     "use_steps": StepSequence.FOUR,  # use 4 or 8 step sequence
@@ -29,4 +32,8 @@ def calc_motion():
     res['r']['th'] = 0
     config['motion'] = res 
 
+def change_to_dev_mode():
+    config['pattern_dir'] = "../patterns"
+
 calc_motion() 
+change_to_dev_mode()

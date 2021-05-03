@@ -1,8 +1,15 @@
-from StepSequence import StepSequence, Dir
-from config import config
 from typing import Tuple, List
 from time import sleep
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ModuleNotFoundError:
+    import Mock.GPIO as GPIO
+try:
+    from StepSequence import StepSequence, Dir
+    from config import config
+except ModuleNotFoundError:
+    from .StepSequence import StepSequence, Dir
+    from .config import config
 
 class Motor:
     def __init__(self, pins:Tuple[int], gpio_setup_teardown=False, flip_dir=False):
@@ -32,8 +39,8 @@ class Motor:
         if self.flip_dir:
             stp = -stp
         if   stp ==  0: return self.release_break()
-        if   stp ==  1: return self._write_pins(self.__step_seq.next(Dir.CW))
-        elif stp == -1: return self._write_pins(self.__step_seq.next(Dir.CCW))
+        if   stp ==  1: return self._write_pins(self.__step_seq.nxt(Dir.CW))
+        elif stp == -1: return self._write_pins(self.__step_seq.nxt(Dir.CCW))
         #self._write_pins(self.__step_seq.next(dir))
 
     def _write_pins(self, outpt:List[bool]):

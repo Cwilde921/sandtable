@@ -1,11 +1,21 @@
-from Motor import Motor
-from Reader import Reader
-from config import config
-from decimal import *
-from time import sleep
-import RPi.GPIO as GPIO
 import math
-import SandTableMath
+from time import sleep
+# from decimal import *
+try:
+    import RPi.GPIO as GPIO
+except ModuleNotFoundError:
+    import Mock.GPIO as GPIO
+try:
+    import SandTableMath
+    from Motor import Motor
+    from Reader import Reader
+    from config import config
+except ModuleNotFoundError:
+    from . import SandTableMath
+    from .Motor import Motor
+    from .Reader import Reader
+    from .config import config
+    
 
 class Table:
     def __init__(self):
@@ -21,7 +31,7 @@ class Table:
         self.step_motion_r = config['motion']['r'] #{'th': 0, 'r': (1/2048)}
         #self.reader = Reader()
         self.debug = True
-        self.heuristic_version = 1
+        self._heuristic_version = 1
         self.safe_mode = True
 
     def __del__(self):
@@ -42,7 +52,7 @@ class Table:
     #return the distance of new_pos to self.goal
     def heuristic(self, new_pos, version=None, safe_mode=None):
         if safe_mode is None: safe_mode = self.safe_mode
-        if version is None: version = self.heuristic_version
+        if version is None: version = self._heuristic_version
         if version == 3:
             return SandTableMath.heuristic(new_pos, self.last_pos, self.goal, safe_mode=safe_mode)
         if version == 4:
@@ -119,8 +129,8 @@ class Table:
 
     def heuristic_version(self, version=None):
         if version is None:
-            return self.heuristic_version
-        self.heuristic_version = version
+            return self._heuristic_version
+        self._heuristic_version = version
 
     #def execute(self, filename):
     #    self.reader.read_exec_file(filename, self.goto)

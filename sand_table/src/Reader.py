@@ -1,7 +1,12 @@
 import os
 import glob
 import random
-from config import config
+try:
+    from config import config
+    import SandTableMath
+except ModuleNotFoundError:
+    from . import SandTableMath
+    from .config import config
 
 
 class Reader:
@@ -59,7 +64,7 @@ class Reader:
             if '.' not in fname:
                 fname += '.thr'
             elif fname[-4:] != '.thr':
-                raise Exception("bad file type")
+                raise Exception("bad file")
             return Reader.validate_file_name(path + '/' + fname, test_append=False)
 
     @staticmethod
@@ -128,7 +133,7 @@ class Reader:
                 return None
 
 if __name__ == '__main__':
-    fname = "sand_table/src/test.txt"
+    fname = "./test/test.txt"
     # fname = "patterns/sandify.thr"
     f = Reader.open_file(fname, validate_file=True)
     print(next(f))
